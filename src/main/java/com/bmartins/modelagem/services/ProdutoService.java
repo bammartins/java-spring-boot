@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bmartins.modelagem.domain.Produto;
 import com.bmartins.modelagem.repositories.ProdutoRepository;
+import com.bmartins.modelagem.services.exception.ObjectNotFound;
 
 @Service
 public class ProdutoService {
@@ -16,12 +17,7 @@ public class ProdutoService {
 	private ProdutoRepository repo;
 	
 	public void createProduct (List<Produto> p) {
-		try {
-			repo.saveAll(p);
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e);
-		}
+		repo.saveAll(p);
 	}
 	
 	public void updateProduct (Integer id, Produto p) {
@@ -31,7 +27,12 @@ public class ProdutoService {
 	}
 	
 	public void deleteProduct (Integer id) {
-		repo.deleteById(id);
+		Optional<Produto> p = searchById(id);
+		if (!p.isPresent()) {
+			throw new ObjectNotFound("Produto não encontrado!");
+		} else {
+			repo.deleteById(id);
+		}
 	}
 	
 	public List<Produto> searchAll (){

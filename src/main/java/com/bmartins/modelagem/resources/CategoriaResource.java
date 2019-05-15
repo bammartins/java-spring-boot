@@ -1,7 +1,8 @@
 package com.bmartins.modelagem.resources;
 
 import java.util.List;
-import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class CategoriaResource {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(@PathVariable Integer id) {
-		Optional<Categoria> obj = service.searchById(id);
+		Categoria obj = service.searchById(id);
 		return ResponseEntity.ok(obj);
 	}
 	
@@ -36,7 +37,7 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(value = "/addNew", method = RequestMethod.POST)
-	public ResponseEntity<List<Categoria>> createCategory(@RequestBody List<Categoria> c){
+	public ResponseEntity<List<Categoria>> createCategory(@RequestBody @Valid List<Categoria> c){
 		service.createCategory(c);
 		return ResponseEntity.ok(c);
 	}

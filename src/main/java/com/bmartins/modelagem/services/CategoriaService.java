@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bmartins.modelagem.domain.Categoria;
 import com.bmartins.modelagem.repositories.CategoriaRepository;
+import com.bmartins.modelagem.services.exception.ObjectNotFound;
 
 /*
  * Camada que utiliza operacoes do Repository para disponibilizar 
@@ -24,9 +25,12 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repo;
 	
-	public Optional<Categoria> searchById(Integer id) {
+	public Categoria searchById(Integer id) {
 		Optional<Categoria> category = repo.findById(id);
-		return category;
+		return category.orElseThrow(
+				() -> 
+				new ObjectNotFound("Categoria não encontrada! Id fornecido: "+ id)
+				);
 	}
 	
 	public List<Categoria> searchAll(){
@@ -44,11 +48,12 @@ public class CategoriaService {
 	}
 	
 	public void deleteCategory (Integer id) {
-		try {
+		Categoria cat = searchById(id);
+		
+		if (cat == null) {
+			throw new ObjectNotFound("Categoria não encontrada!");
+		} else {
 			repo.deleteById(id);
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e);
 		}
 	}
 	
