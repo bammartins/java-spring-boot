@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.bmartins.modelagem.domain.Categoria;
 import com.bmartins.modelagem.domain.Cidade;
+import com.bmartins.modelagem.domain.Cliente;
+import com.bmartins.modelagem.domain.Endereco;
 import com.bmartins.modelagem.domain.Estado;
 import com.bmartins.modelagem.domain.Produto;
+import com.bmartins.modelagem.domain.enums.TipoCliente;
 import com.bmartins.modelagem.repositories.CategoriaRepository;
 import com.bmartins.modelagem.repositories.CidadeRepository;
+import com.bmartins.modelagem.repositories.ClienteRepository;
+import com.bmartins.modelagem.repositories.EnderecoRepository;
 import com.bmartins.modelagem.repositories.EstadoRepository;
 import com.bmartins.modelagem.repositories.ProdutoRepository;
 
@@ -30,7 +35,13 @@ public class ModelagemConceitualApplication implements CommandLineRunner {
 	
 	@Autowired
 	private EstadoRepository estadoRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ModelagemConceitualApplication.class, args);
 	}
@@ -51,6 +62,20 @@ public class ModelagemConceitualApplication implements CommandLineRunner {
 		Cidade c2 = new Cidade(null, "Sao Paulo", e2);
 		Cidade c3 = new Cidade(null, "Campinas", e2);
 		
+		Cliente cl1 = new Cliente(null, "Bruno Martins", "bruno@teste.com", TipoCliente.PESSOAFISICA);
+		Cliente cl2 = new Cliente(null, "Bruno Martins Empresa", "bruno.empresa@teste.com", TipoCliente.PESSOAJURIDICA);
+		
+		Endereco end1 = new Endereco(null, "Rua Canaa", "07", null, "Jd. Santo André", "09132470", c2, cl1);
+		Endereco end2 = new Endereco(null, "Rua Felipe Camarao", "507", null, "Utinga", "0000000", c2, cl1);
+		Endereco end3 = new Endereco(null, "Alameda Cleveland", "509", null, "Jd. Santo André", "09132470", c1, cl2);
+		Endereco end4 = new Endereco(null, "Rua Felipe Camarao", "507", null, "Utinga", "0000000", c3, cl2);
+		
+		cl1.getTelefones().addAll(Arrays.asList("985701913", "49744449"));
+		cl1.getEnderecos().addAll(Arrays.asList(end1, end4));
+		
+		cl2.getTelefones().addAll(Arrays.asList("968372707", "44510485"));
+		cl2.getEnderecos().addAll(Arrays.asList(end2, end3));
+		
 		e1.getCidades().addAll(Arrays.asList(c1));
 		e2.getCidades().addAll(Arrays.asList(c2, c3));
 		
@@ -66,6 +91,9 @@ public class ModelagemConceitualApplication implements CommandLineRunner {
 		
 		estadoRepository.saveAll(Arrays.asList(e1, e2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		clienteRepository.saveAll(Arrays.asList(cl1, cl2));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3, end4));
 		
 	}
 	
