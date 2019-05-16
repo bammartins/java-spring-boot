@@ -1,7 +1,5 @@
 package com.bmartins.modelagem.domain.enums;
 
-import java.util.Iterator;
-
 public enum TipoCliente {
 	
 	PESSOAFISICA(1, "Pessoa Física"),
