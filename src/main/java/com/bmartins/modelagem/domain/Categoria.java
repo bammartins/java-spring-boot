@@ -12,8 +12,6 @@ import javax.persistence.ManyToMany;
 
 import org.springframework.lang.NonNull;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 /*
  *	Classe Java basica com get, set, constructor, etc.
  *	Camada possui algumas annotations para o banco ser mapeado automaticamente 
@@ -30,7 +28,8 @@ public class Categoria implements Serializable{
 	@NonNull
 	private String nome;
 	
-	@JsonManagedReference // Utilizado para retornar uma lista de objetos de uma collection
+	//@JsonManagedReference // Utilizado para retornar uma lista de objetos de uma collection
+	
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<Produto>();
 	
