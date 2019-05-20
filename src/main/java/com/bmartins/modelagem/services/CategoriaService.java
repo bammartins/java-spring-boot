@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.bmartins.modelagem.domain.Categoria;
 import com.bmartins.modelagem.repositories.CategoriaRepository;
+import com.bmartins.modelagem.services.exception.DataIntegrityException;
 import com.bmartins.modelagem.services.exception.ObjectNotFound;
 
 /*
@@ -43,18 +45,19 @@ public class CategoriaService {
 	}
 	
 	public void deleteCategory (Integer id) {
-		Categoria cat = searchById(id);
+		searchById(id);
 		
-		if (cat == null) {
-			throw new ObjectNotFound("Categoria não encontrada!");
-		} else {
+		try {
 			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possíviel excluir uma categoria que possui produtos");
 		}
 	}
 	
-	public void updateCategory (Integer id, Categoria nCat){
-		Optional<Categoria> alteredCategory = repo.findById(id);
-		nCat.setId(alteredCategory.get().getId());
+	public void updateCategory (Categoria nCat){
+//		Optional<Categoria> alteredCategory = repo.findById(id);
+//		nCat.setId(alteredCategory.get().getId());
+		searchById(nCat.getId());
 		repo.save(nCat);
 	}
 }

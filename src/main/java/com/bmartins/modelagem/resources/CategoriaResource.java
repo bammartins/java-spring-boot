@@ -46,15 +46,16 @@ public class CategoriaResource {
 		
 	}
 	
-	@RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> createCategory(@PathVariable Integer id){
 		service.deleteCategory(id);
 		return ResponseEntity.ok(id);
 	}
 	
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.PATCH)
-	public ResponseEntity<?> updateCategory(@PathVariable Integer id, @RequestBody Categoria c){
-		service.updateCategory(id, c);
-		return ResponseEntity.ok(c);
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> updateCategory(@PathVariable Integer id, @RequestBody Categoria c){
+		c.setId(id);
+		service.updateCategory(c);
+		return ResponseEntity.noContent().build();
 	}
 }
