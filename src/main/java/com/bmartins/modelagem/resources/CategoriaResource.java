@@ -2,6 +2,7 @@ package com.bmartins.modelagem.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bmartins.modelagem.domain.Categoria;
+import com.bmartins.modelagem.dto.CategoriaDTO;
 import com.bmartins.modelagem.services.CategoriaService;
 
 // Camada que disponibiliza os endpoints no padrao REST
@@ -32,8 +34,8 @@ public class CategoriaResource {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<?> listCategory() {
 		List<Categoria> obj = service.searchAll();
-		
-		return ResponseEntity.ok(obj);
+		List<CategoriaDTO> listDto = obj.stream().map(item -> new CategoriaDTO(item)).collect(Collectors.toList());
+		return ResponseEntity.ok(listDto);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
