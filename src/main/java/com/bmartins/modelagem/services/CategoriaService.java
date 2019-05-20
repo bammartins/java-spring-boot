@@ -38,13 +38,8 @@ public class CategoriaService {
 		return catList;
 	}
 	
-	public void createCategory(List<Categoria> data){
-		try {
-			repo.saveAll(data);
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e);
-		}
+	public void createCategory(Categoria data){
+		repo.save(data);
 	}
 	
 	public void deleteCategory (Integer id) {

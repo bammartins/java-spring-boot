@@ -1,8 +1,7 @@
 package com.bmartins.modelagem.resources;
 
+import java.net.URI;
 import java.util.List;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bmartins.modelagem.domain.Categoria;
 import com.bmartins.modelagem.services.CategoriaService;
@@ -36,10 +36,14 @@ public class CategoriaResource {
 		return ResponseEntity.ok(obj);
 	}
 	
-	@RequestMapping(value = "/addNew", method = RequestMethod.POST)
-	public ResponseEntity<List<Categoria>> createCategory(@RequestBody @Valid List<Categoria> c){
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> createCategory(@RequestBody Categoria c){
 		service.createCategory(c);
-		return ResponseEntity.ok(c);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				  .path("/{id}").buildAndExpand(c.getId()).toUri();
+		
+		return ResponseEntity.created(uri).build();
+		
 	}
 	
 	@RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
