@@ -29,6 +29,7 @@ public class Cliente implements Serializable{
 	private String nome;
 	private String email;
 	private Integer tipo;
+	private String documento;
 	
 	//@JsonManagedReference
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -46,11 +47,12 @@ public class Cliente implements Serializable{
 		
 	}
 
-	public Cliente(Integer id, String nome, String email, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String documento, TipoCliente tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
+		this.documento = documento;
 		this.tipo = ( tipo == null ) ? null : tipo.getId();
 	}
 
@@ -130,6 +132,14 @@ public class Cliente implements Serializable{
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 	
 	

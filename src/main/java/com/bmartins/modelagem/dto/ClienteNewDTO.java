@@ -3,22 +3,46 @@ package com.bmartins.modelagem.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.bmartins.modelagem.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	//Cliente
+	@NotEmpty
+	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres" )
 	private String nome;
+	@NotEmpty
+	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres" )
+	@Email(message = "email inválido")
 	private String email;
+	
+	@NotNull
 	private Integer tipo;
 	
+	@NotEmpty
+	private String documento;
+	
 	//Telefone
+	@NotEmpty
 	private List<String> telefones;
 	
 	//Endereco
+	@NotEmpty
 	private String logradouro;
+	@NotEmpty
 	private String numero;
 	private String complemento;
 	private String bairro;
+	
+	@NotEmpty
 	private String cep;
 	
 	//Cidade
@@ -42,6 +66,14 @@ public class ClienteNewDTO implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 
 	public Integer getTipo() {

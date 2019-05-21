@@ -87,8 +87,8 @@ public class ModelagemConceitualApplication implements CommandLineRunner {
 		Cidade c2 = new Cidade(null, "Sao Paulo", e2);
 		Cidade c3 = new Cidade(null, "Campinas", e2);
 		
-		Cliente cl1 = new Cliente(null, "Bruno Martins", "bruno@teste.com", TipoCliente.PESSOAFISICA);
-		Cliente cl2 = new Cliente(null, "Bruno Martins Empresa", "bruno.empresa@teste.com", TipoCliente.PESSOAJURIDICA);
+		Cliente cl1 = new Cliente(null, "Bruno Martins", "bruno@teste.com", "11410517616" , TipoCliente.PESSOAFISICA);
+		Cliente cl2 = new Cliente(null, "Bruno Martins Empresa", "bruno.empresa@teste.com", "78128127000188", TipoCliente.PESSOAJURIDICA);
 		
 		Endereco end1 = new Endereco(null, "Rua Canaa", "07", null, "Jd. Santo André", "09132470", c2, cl1);
 		Endereco end2 = new Endereco(null, "Rua Felipe Camarao", "507", null, "Utinga", "0000000", c2, cl1);
