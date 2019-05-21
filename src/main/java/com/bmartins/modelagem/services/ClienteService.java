@@ -64,7 +64,7 @@ public class ClienteService {
 		}
 	}
 	
-	public void update (Cliente nCli){
+	public void update(Cliente nCli){
 		Cliente cli = searchById(nCli.getId());
 		updateData(cli, nCli);
 		clienteRepository.save(cli);
