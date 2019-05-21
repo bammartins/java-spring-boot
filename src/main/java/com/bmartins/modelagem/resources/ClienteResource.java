@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bmartins.modelagem.domain.Cliente;
 import com.bmartins.modelagem.dto.ClienteDTO;
+import com.bmartins.modelagem.dto.ClienteNewDTO;
 import com.bmartins.modelagem.services.ClienteService;
 
 @RestController
@@ -57,11 +58,11 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> create(@Valid @RequestBody ClienteDTO c){
-		Cliente cat = service.fromDTO(c);
-		service.create(cat);
+	public ResponseEntity<Void> create(@Valid @RequestBody ClienteNewDTO c){
+		Cliente cli= service.fromDTO(c);
+		service.create(cli);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				  .path("/{id}").buildAndExpand(c.getId()).toUri();
+				  .path("/{id}").buildAndExpand(cli.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
 		
