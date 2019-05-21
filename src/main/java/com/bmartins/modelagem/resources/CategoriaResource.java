@@ -36,7 +36,7 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> listCategory() {
+	public ResponseEntity<?> list() {
 		List<Categoria> obj = service.searchAll();
 		List<CategoriaDTO> listDto = obj.stream().map(
 														item -> new CategoriaDTO(item)
@@ -58,7 +58,7 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> createCategory(@Valid @RequestBody CategoriaDTO c){
+	public ResponseEntity<Void> create(@Valid @RequestBody CategoriaDTO c){
 		Categoria cat = service.fromDTO(c);
 		service.createCategory(cat);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -69,13 +69,13 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> createCategory(@PathVariable Integer id){
+	public ResponseEntity<?> delete(@PathVariable Integer id){
 		service.deleteCategory(id);
 		return ResponseEntity.ok(id);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> updateCategory(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO c){
+	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO c){
 		Categoria cat = service.fromDTO(c);
 		cat.setId(id);
 		service.updateCategory(cat);
