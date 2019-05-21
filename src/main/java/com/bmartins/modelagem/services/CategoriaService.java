@@ -58,9 +58,10 @@ public class CategoriaService {
 		}
 	}
 	
-	public void updateCategory (Categoria nCat){
-		searchById(nCat.getId());
-		repo.save(nCat);
+	public void update (Categoria nCat){
+		Categoria cat = searchById(nCat.getId());
+		updateData(cat, nCat);
+		repo.save(cat);
 	}
 	
 	public Page<Categoria> findPerPage(Integer p, Integer lpp, String orderBy, String direction){
@@ -70,5 +71,9 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO c) {
 		return new Categoria(c.getId(), c.getNome());
+	}
+	
+	private void updateData (Categoria catBD, Categoria tempCat) {
+		catBD.setNome(tempCat.getNome());
 	}
 }
