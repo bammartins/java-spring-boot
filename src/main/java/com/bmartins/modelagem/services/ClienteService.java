@@ -50,7 +50,6 @@ public class ClienteService {
 		data.setId(null);
 		clienteRepository.save(data);
 		enderecoRepository.saveAll(data.getEnderecos());
-		
 		return data;
 	}
 	
